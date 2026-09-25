@@ -3,642 +3,882 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>आपके लिए कुछ खास ✨</title>
+<title>AI Reader — Ask Anything</title>
 
 <style>
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
 body{
+  font-family: Georgia, "Noto Serif", serif;
+  background:
+    radial-gradient(circle at top,#28324d 0%,#111522 45%,#080a10 100%);
+  color:#252525;
+  min-height:100vh;
+  padding:20px;
+}
+
+/* MAIN BOOK */
+.book{
+  width:min(1100px,100%);
+  min-height:calc(100vh - 40px);
+  margin:auto;
+  background:#eee9dc;
+  border-radius:18px;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.55),
+    inset 0 0 30px rgba(0,0,0,.08);
+  overflow:hidden;
+  position:relative;
+}
+
+/* HEADER */
+.header{
+  height:72px;
+  background:#171b29;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  font-family:Arial,sans-serif;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-icon{
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#d9b36c,#8b6231);
+  display:grid;
+  place-items:center;
+  font-size:22px;
+}
+
+.logo h2{
+  font-size:20px;
+}
+
+.logo small{
+  display:block;
+  color:#aaa;
+  margin-top:2px;
+}
+
+.header-buttons{
+  display:flex;
+  gap:8px;
+}
+
+.header button{
+  border:1px solid #3d4355;
+  background:#23283a;
+  color:white;
+  padding:10px 13px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.header button:hover{
+  background:#343b51;
+}
+
+/* CONTENT */
+.content{
+  max-width:850px;
+  margin:auto;
+  padding:45px 25px 150px;
+}
+
+/* WELCOME */
+.welcome{
+  text-align:center;
+  margin-bottom:35px;
+}
+
+.welcome .book-icon{
+  font-size:55px;
+  margin-bottom:12px;
+}
+
+.welcome h1{
+  font-size:38px;
+  color:#29251f;
+  margin-bottom:10px;
+}
+
+.welcome p{
+  font-family:Arial,sans-serif;
+  color:#6b655b;
+  font-size:15px;
+}
+
+/* EXAMPLE QUESTIONS */
+.examples{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin:25px 0 40px;
+}
+
+.example{
+  background:#f8f4e9;
+  border:1px solid #d7cebb;
+  border-radius:30px;
+  padding:10px 16px;
+  cursor:pointer;
+  color:#574c3c;
+  font-family:Arial,sans-serif;
+  transition:.2s;
+}
+
+.example:hover{
+  transform:translateY(-2px);
+  box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+/* CHAT BLOCK */
+.chat{
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+/* USER QUESTION */
+.user-block{
+  align-self:flex-end;
+  max-width:78%;
+}
+
+.user-label{
+  font-family:Arial,sans-serif;
+  font-size:12px;
+  color:#777;
+  margin-bottom:6px;
+  text-align:right;
+}
+
+.user-question{
+  background:#242a3a;
+  color:white;
+  padding:15px 18px;
+  border-radius:17px 17px 4px 17px;
+  font-family:Arial,sans-serif;
+  line-height:1.5;
+}
+
+/* AI BOOK PAGE */
+.ai-block{
+  position:relative;
+  background:#fffdf5;
+  border:1px solid #ddd3bd;
+  border-radius:4px;
+  padding:30px 32px;
+  box-shadow:
+    8px 8px 0 #ded6c4,
+    0 10px 25px rgba(0,0,0,.08);
+}
+
+.ai-block:before{
+  content:"";
+  position:absolute;
+  left:15px;
+  top:0;
+  bottom:0;
+  width:1px;
+  background:#e3b7a8;
+}
+
+.ai-label{
+  font-family:Arial,sans-serif;
+  font-size:12px;
+  color:#947342;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:15px;
+}
+
+.ai-answer{
+  font-size:18px;
+  line-height:1.85;
+  color:#302d27;
+}
+
+.ai-answer h2{
+  font-size:25px;
+  margin:8px 0 15px;
+  color:#201d18;
+}
+
+.ai-answer h3{
+  font-size:20px;
+  margin:18px 0 8px;
+}
+
+.ai-answer p{
+  margin-bottom:14px;
+}
+
+.ai-answer ul{
+  margin:10px 0 18px 25px;
+}
+
+.ai-answer li{
+  margin:7px 0;
+}
+
+.ai-answer strong{
+  color:#7b5725;
+}
+
+/* ACTIONS */
+.answer-actions{
+  display:flex;
+  gap:8px;
+  margin-top:20px;
+  padding-top:15px;
+  border-top:1px solid #e7dfcf;
+}
+
+.answer-actions button{
+  border:1px solid #d8cfbd;
+  background:#f5f0e4;
+  color:#665a48;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-family:Arial,sans-serif;
+}
+
+.answer-actions button:hover{
+  background:#e9e1d1;
+}
+
+/* INPUT AREA */
+.input-area{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(850px,calc(100% - 40px));
+  z-index:20;
+}
+
+.input-box{
+  background:rgba(25,29,42,.96);
+  border:1px solid #41485c;
+  padding:8px;
+  border-radius:18px;
+  display:flex;
+  gap:8px;
+  box-shadow:0 15px 40px rgba(0,0,0,.4);
+  backdrop-filter:blur(15px);
+}
+
+#question{
+  flex:1;
+  background:transparent;
+  border:0;
+  outline:none;
+  color:white;
+  font-family:Arial,sans-serif;
+  font-size:16px;
+  padding:13px;
+}
+
+#question::placeholder{
+  color:#969baa;
+}
+
+#send{
+  width:50px;
+  border:0;
+  border-radius:13px;
+  background:linear-gradient(135deg,#d6ae67,#966b34);
+  color:white;
+  font-size:20px;
+  cursor:pointer;
+}
+
+#send:hover{
+  transform:scale(1.03);
+}
+
+/* TYPING */
+.typing{
+  display:flex;
+  gap:5px;
+  padding:10px 0;
+}
+
+.typing span{
+  width:7px;
+  height:7px;
+  background:#a98755;
+  border-radius:50%;
+  animation:blink 1.2s infinite;
+}
+
+.typing span:nth-child(2){
+  animation-delay:.2s;
+}
+
+.typing span:nth-child(3){
+  animation-delay:.4s;
+}
+
+@keyframes blink{
+  0%,80%,100%{opacity:.25}
+  40%{opacity:1}
+}
+
+/* MOBILE */
+@media(max-width:650px){
+
+  body{
+    padding:0;
+  }
+
+  .book{
     min-height:100vh;
-    overflow:hidden;
-    font-family:Arial, sans-serif;
-    color:#fff;
-    background:
-        radial-gradient(circle at 20% 20%,#7c3aed55,transparent 35%),
-        radial-gradient(circle at 80% 80%,#ec489955,transparent 35%),
-        linear-gradient(135deg,#080014,#18002f,#05000d);
+    border-radius:0;
+  }
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    perspective:1200px;
-}
+  .header{
+    height:65px;
+    padding:0 14px;
+  }
 
-/* Moving background */
-body::before,
-body::after{
-    content:"";
-    position:fixed;
-    width:300px;
-    height:300px;
-    border-radius:50%;
-    filter:blur(80px);
-    opacity:.35;
-    animation:move 8s infinite alternate ease-in-out;
-}
-
-body::before{
-    background:#9333ea;
-    top:-100px;
-    left:-100px;
-}
-
-body::after{
-    background:#ec4899;
-    bottom:-120px;
-    right:-100px;
-    animation-delay:2s;
-}
-
-@keyframes move{
-    from{transform:translate(0,0);}
-    to{transform:translate(100px,70px);}
-}
-
-/* 3D Card */
-.card{
-    width:min(92%,450px);
-    padding:34px 25px;
-    text-align:center;
-
-    background:rgba(255,255,255,.09);
-    border:1px solid rgba(255,255,255,.2);
-    border-radius:30px;
-
-    backdrop-filter:blur(18px);
-
-    box-shadow:
-        0 30px 70px #0008,
-        inset 0 1px 1px #fff3;
-
-    transform-style:preserve-3d;
-
-    transition:transform .2s ease;
-
-    position:relative;
-    z-index:5;
-}
-
-/* Shine */
-.card::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:30px;
-    background:
-        linear-gradient(
-            120deg,
-            transparent 20%,
-            #ffffff18 45%,
-            transparent 70%
-        );
-    pointer-events:none;
-}
-
-.icon{
-    font-size:60px;
-    transform:translateZ(60px);
-    animation:float 2.5s infinite ease-in-out;
-}
-
-@keyframes float{
-    0%,100%{transform:translateZ(60px) translateY(0);}
-    50%{transform:translateZ(60px) translateY(-10px);}
-}
-
-h1{
-    margin-top:12px;
-    font-size:28px;
-    transform:translateZ(45px);
-}
-
-.sub{
-    margin:12px 0 25px;
-    color:#ddd;
-    line-height:1.6;
-    transform:translateZ(35px);
-}
-
-input{
-    width:100%;
-    padding:16px;
-    border:0;
-    outline:none;
-    border-radius:16px;
-
-    background:#ffffffee;
-    color:#222;
-
+  .logo h2{
     font-size:17px;
-    text-align:center;
+  }
 
-    transform:translateZ(40px);
-}
+  .logo small{
+    font-size:10px;
+  }
 
-input:focus{
-    box-shadow:0 0 0 3px #ec489977;
-}
+  .logo-icon{
+    width:37px;
+    height:37px;
+  }
 
-.name-preview{
-    min-height:60px;
-    margin:18px 0;
+  .header button{
+    padding:8px 9px;
+    font-size:12px;
+  }
 
-    font-size:34px;
-    font-weight:bold;
+  .content{
+    padding:30px 14px 140px;
+  }
 
-    color:#ffd6f1;
+  .welcome h1{
+    font-size:29px;
+  }
 
-    text-shadow:
-        0 0 10px #ec4899,
-        0 0 30px #ec4899;
+  .welcome p{
+    font-size:14px;
+  }
 
-    transform:translateZ(70px);
+  .user-block{
+    max-width:90%;
+  }
 
-    transition:.3s;
-}
+  .ai-block{
+    padding:24px 20px;
+    box-shadow:5px 5px 0 #ded6c4;
+  }
 
-button{
-    width:100%;
-    min-height:50px;
+  .ai-answer{
+    font-size:16px;
+    line-height:1.75;
+  }
 
-    border:0;
-    border-radius:16px;
+  .ai-answer h2{
+    font-size:22px;
+  }
 
-    color:#fff;
-    font-size:17px;
-    font-weight:bold;
+  .input-area{
+    width:calc(100% - 20px);
+    bottom:10px;
+  }
 
-    cursor:pointer;
-
-    background:
-        linear-gradient(90deg,#ec4899,#8b5cf6);
-
-    box-shadow:
-        0 10px 30px #ec489955;
-
-    transform:translateZ(45px);
-
-    transition:.25s;
-}
-
-button:hover{
-    transform:translateZ(55px) scale(1.02);
-}
-
-button:active{
-    transform:translateZ(35px) scale(.98);
-}
-
-/* Surprise */
-.surprise{
-    display:none;
-
-    margin-top:25px;
-    padding:22px 15px;
-
-    border-radius:20px;
-
-    background:#ffffff0d;
-    border:1px solid #ffffff18;
-
-    transform:translateZ(50px);
-
-    animation:reveal .8s ease forwards;
-}
-
-@keyframes reveal{
-    from{
-        opacity:0;
-        transform:translateZ(50px) scale(.5) rotateX(30deg);
-    }
-    to{
-        opacity:1;
-        transform:translateZ(50px) scale(1) rotateX(0);
-    }
-}
-
-.surprise h2{
-    font-size:30px;
-    margin-bottom:12px;
-
-    color:#ffb6dc;
-
-    text-shadow:0 0 20px #ec4899;
-}
-
-.message{
-    font-size:17px;
-    line-height:1.7;
-    color:#eee;
-}
-
-.music{
-    position:fixed;
-    right:15px;
-    top:15px;
-
-    width:45px;
-    height:45px;
-
-    border-radius:50%;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:#ffffff18;
-    border:1px solid #ffffff33;
-
-    cursor:pointer;
-    z-index:20;
-
-    font-size:20px;
-}
-
-.music.playing{
-    animation:music 1s infinite alternate;
-}
-
-@keyframes music{
-    from{transform:scale(1);}
-    to{transform:scale(1.12);}
-}
-
-/* Floating hearts */
-.heart{
-    position:fixed;
-    bottom:-40px;
-    pointer-events:none;
-    z-index:30;
-
-    animation:rise linear forwards;
-}
-
-@keyframes rise{
-    from{
-        opacity:1;
-        transform:translateY(0) rotate(0) scale(.6);
-    }
-    to{
-        opacity:0;
-        transform:
-            translateY(-110vh)
-            rotate(360deg)
-            scale(1.5);
-    }
-}
-
-/* Mobile */
-@media(max-width:480px){
-
-    .card{
-        padding:28px 20px;
-    }
-
-    h1{
-        font-size:24px;
-    }
-
-    .name-preview{
-        font-size:30px;
-    }
-
-    .icon{
-        font-size:52px;
-    }
+  .example{
+    font-size:13px;
+    padding:9px 12px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- Music button -->
-<div class="music" id="musicBtn" title="Music">
-    🔇
+<div class="book">
+
+  <header class="header">
+
+    <div class="logo">
+      <div class="logo-icon">✦</div>
+      <div>
+        <h2>AI Reader</h2>
+        <small>Ask Anything</small>
+      </div>
+    </div>
+
+    <div class="header-buttons">
+      <button onclick="newChat()">＋ New</button>
+      <button onclick="toggleTheme()">◐</button>
+    </div>
+
+  </header>
+
+
+  <main class="content">
+
+    <section class="welcome" id="welcome">
+
+      <div class="book-icon">📖</div>
+
+      <h1>पूछिए, कुछ भी।</h1>
+
+      <p>
+        सवाल लिखिए और जवाब को किताब के पन्ने की तरह पढ़िए।
+      </p>
+
+    </section>
+
+
+    <div class="examples">
+
+      <button class="example"
+        onclick="askExample('HTML क्या है और इसे कैसे सीखें?')">
+        HTML कैसे सीखें?
+      </button>
+
+      <button class="example"
+        onclick="askExample('एक छोटा business कैसे शुरू करें?')">
+        Business शुरू कैसे करें?
+      </button>
+
+      <button class="example"
+        onclick="askExample('भारत के बारे में बताइए')">
+        भारत के बारे में बताइए
+      </button>
+
+      <button class="example"
+        onclick="askExample('आज कुछ नया सीखने के लिए बताइए')">
+        कुछ नया सिखाइए
+      </button>
+
+    </div>
+
+
+    <div class="chat" id="chat"></div>
+
+  </main>
+
 </div>
 
-<div class="card" id="card">
 
-    <div class="icon">✨</div>
+<div class="input-area">
 
-    <h1>एक खास चीज़ आपके लिए</h1>
-
-    <p class="sub">
-        अपना नाम लिखिए...<br>
-        फिर देखिए आपके नाम में कितना जादू है 💫
-    </p>
+  <div class="input-box">
 
     <input
-        id="name"
-        type="text"
-        maxlength="30"
-        placeholder="अपना नाम लिखें..."
-        autocomplete="off"
+      id="question"
+      type="text"
+      placeholder="कुछ भी पूछें..."
+      autocomplete="off"
     >
 
-    <div class="name-preview" id="preview">
-        आपका नाम ✨
-    </div>
+    <button id="send" onclick="sendQuestion()">➤</button>
 
-    <button id="openBtn">
-        ✨ मेरा Surprise खोलो
-    </button>
-
-    <div class="surprise" id="surprise">
-
-        <h2 id="finalName"></h2>
-
-        <p class="message" id="message"></p>
-
-    </div>
+  </div>
 
 </div>
+
 
 <script>
 
-/* =========================
-   NAME LIVE PREVIEW
-========================= */
+const questionInput = document.getElementById("question");
+const chat = document.getElementById("chat");
 
-const nameInput = document.getElementById("name");
-const preview = document.getElementById("preview");
-const surprise = document.getElementById("surprise");
-const finalName = document.getElementById("finalName");
-const message = document.getElementById("message");
-
-nameInput.addEventListener("input", () => {
-
-    const name = nameInput.value.trim();
-
-    if(name){
-
-        preview.textContent = "✨ " + name + " ✨";
-
-    }else{
-
-        preview.textContent = "आपका नाम ✨";
-
-    }
-
-    surprise.style.display = "none";
+questionInput.addEventListener("keydown",function(e){
+  if(e.key === "Enter"){
+    sendQuestion();
+  }
 });
 
 
-/* =========================
-   SURPRISE
-========================= */
-
-document.getElementById("openBtn").addEventListener("click", () => {
-
-    const name = nameInput.value.trim();
-
-    if(!name){
-
-        nameInput.focus();
-        nameInput.placeholder = "पहले अपना नाम लिखिए 😊";
-        return;
-
-    }
-
-    finalName.textContent = "💖 " + name + " 💖";
-
-    message.innerHTML =
-        "आपका नाम ही आपकी अपनी पहचान है।<br><br>" +
-        "✨ आपकी जिंदगी में हमेशा खुशियाँ रहें।<br>" +
-        "🌸 चेहरे पर मुस्कान बनी रहे।<br>" +
-        "💫 और आपके सपने एक-एक करके पूरे हों।<br><br>" +
-        "आज बस इतना याद रखिए — <b>आप खास हैं।</b> ❤️";
-
-    surprise.style.display = "block";
-
-    startMusic();
-
-    createHearts();
-
-});
+function askExample(text){
+  questionInput.value = text;
+  sendQuestion();
+}
 
 
-/* =========================
-   3D MOUSE / TOUCH EFFECT
-========================= */
+function sendQuestion(){
 
-const card = document.getElementById("card");
+  const question = questionInput.value.trim();
 
-document.addEventListener("mousemove", (e) => {
+  if(!question) return;
 
-    if(window.innerWidth < 600) return;
+  document.getElementById("welcome").style.display="none";
 
-    const x = (window.innerWidth / 2 - e.clientX) / 35;
-    const y = (window.innerHeight / 2 - e.clientY) / 35;
+  addUserQuestion(question);
 
-    card.style.transform =
-        `rotateY(${x}deg) rotateX(${y}deg)`;
+  questionInput.value="";
 
-});
+  const aiBox = createAIBox();
 
-document.addEventListener("mouseleave", () => {
+  chat.appendChild(aiBox);
 
-    card.style.transform =
-        "rotateY(0deg) rotateX(0deg)";
+  aiBox.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
 
-});
+  showTyping(aiBox,question);
+}
 
 
-/* =========================
-   FLOATING HEARTS
-========================= */
+function addUserQuestion(question){
 
-function createHearts(){
+  const block = document.createElement("div");
 
-    const symbols = [
-        "💖","💕","✨","💫","🌸","⭐","💗"
-    ];
+  block.className="user-block";
 
-    for(let i=0;i<35;i++){
+  block.innerHTML=`
 
-        const heart = document.createElement("div");
+    <div class="user-label">
+      YOU
+    </div>
 
-        heart.className = "heart";
+    <div class="user-question">
+      ${escapeHTML(question)}
+    </div>
 
-        heart.textContent =
-            symbols[Math.floor(Math.random()*symbols.length)];
+  `;
 
-        heart.style.left =
-            Math.random()*100 + "%";
+  chat.appendChild(block);
+}
 
-        heart.style.fontSize =
-            (16 + Math.random()*25) + "px";
 
-        heart.style.animationDuration =
-            (3 + Math.random()*4) + "s";
+function createAIBox(){
 
-        document.body.appendChild(heart);
+  const block=document.createElement("div");
 
-        setTimeout(() => {
-            heart.remove();
-        },7000);
+  block.className="ai-block";
 
-    }
+  block.innerHTML=`
+
+    <div class="ai-label">
+      ✦ AI READER
+    </div>
+
+    <div class="ai-answer">
+
+      <div class="typing">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+    </div>
+
+  `;
+
+  return block;
+}
+
+
+function showTyping(box,question){
+
+  setTimeout(()=>{
+
+    const answer=getDemoAnswer(question);
+
+    const answerArea=box.querySelector(".ai-answer");
+
+    answerArea.innerHTML="";
+
+    typeText(answerArea,answer,0,box);
+
+  },700);
 
 }
 
 
-/* =========================
-   MUSIC
-   No external audio needed.
-   Creates a soft ambient melody
-   using Web Audio API.
-========================= */
+function typeText(element,text,index,box){
 
-let audioContext = null;
-let musicPlaying = false;
-let musicTimer = null;
+  if(index < text.length){
 
-function startMusic(){
+    element.innerHTML =
+      text.substring(0,index+1);
 
-    if(musicPlaying) return;
+    setTimeout(()=>{
+      typeText(element,text,index+1,box);
+    },8);
 
-    try{
+  }else{
 
-        audioContext =
-            new (window.AudioContext ||
-            window.webkitAudioContext)();
+    addActions(element,box);
 
-        musicPlaying = true;
-
-        document.getElementById("musicBtn")
-            .textContent = "🔊";
-
-        document.getElementById("musicBtn")
-            .classList.add("playing");
-
-        playMelody();
-
-    }catch(error){
-
-        console.log("Music unavailable");
-
-    }
-}
-
-
-function playTone(freq, duration, delay){
-
-    if(!audioContext) return;
-
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
-
-    oscillator.type = "sine";
-
-    oscillator.frequency.value = freq;
-
-    gain.gain.setValueAtTime(
-        0,
-        audioContext.currentTime + delay
-    );
-
-    gain.gain.linearRampToValueAtTime(
-        .055,
-        audioContext.currentTime + delay + .05
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        .001,
-        audioContext.currentTime + delay + duration
-    );
-
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
-
-    oscillator.start(
-        audioContext.currentTime + delay
-    );
-
-    oscillator.stop(
-        audioContext.currentTime + delay + duration
-    );
-}
-
-
-function playMelody(){
-
-    if(!musicPlaying) return;
-
-    const notes = [
-        523.25,
-        659.25,
-        783.99,
-        659.25,
-        587.33,
-        698.46,
-        880,
-        698.46
-    ];
-
-    notes.forEach((note,index) => {
-
-        playTone(
-            note,
-            .65,
-            index * .38
-        );
-
-    });
-
-    musicTimer = setTimeout(
-        playMelody,
-        3300
-    );
+  }
 
 }
 
 
-/* =========================
-   MUSIC ON / OFF
-========================= */
+function addActions(element,box){
 
-document.getElementById("musicBtn")
-.addEventListener("click", () => {
+  const actions=document.createElement("div");
 
-    if(!musicPlaying){
+  actions.className="answer-actions";
 
-        startMusic();
+  actions.innerHTML=`
 
-    }else{
+    <button onclick="copyAnswer(this)">
+      📋 Copy
+    </button>
 
-        musicPlaying = false;
+    <button onclick="speakAnswer(this)">
+      🔊 Read
+    </button>
 
-        clearTimeout(musicTimer);
+  `;
 
-        document.getElementById("musicBtn")
-            .textContent = "🔇";
+  box.appendChild(actions);
+}
 
-        document.getElementById("musicBtn")
-            .classList.remove("playing");
 
-        if(audioContext){
+function copyAnswer(button){
 
-            audioContext.close();
+  const box=button.closest(".ai-block");
 
-            audioContext = null;
+  const text=box.querySelector(".ai-answer").innerText;
 
-        }
+  navigator.clipboard.writeText(text);
 
-    }
+  button.innerText="✓ Copied";
 
-});
+  setTimeout(()=>{
+    button.innerText="📋 Copy";
+  },1500);
+}
+
+
+function speakAnswer(button){
+
+  const box=button.closest(".ai-block");
+
+  const text=box.querySelector(".ai-answer").innerText;
+
+  if("speechSynthesis" in window){
+
+    speechSynthesis.cancel();
+
+    const speech=new SpeechSynthesisUtterance(text);
+
+    speech.lang="hi-IN";
+
+    speech.rate=.95;
+
+    speechSynthesis.speak(speech);
+
+  }
+
+}
+
+
+function getDemoAnswer(question){
+
+  const q=question.toLowerCase();
+
+
+  if(
+    q.includes("html") ||
+    q.includes("वेब") ||
+    q.includes("website")
+  ){
+
+    return `
+
+      <h2>HTML क्या है?</h2>
+
+      <p>
+        <strong>HTML</strong> वेबसाइट का ढांचा बनाने की भाषा है।
+        इसे आप किसी घर के नक्शे की तरह समझ सकते हैं।
+      </p>
+
+      <h3>HTML से क्या बना सकते हैं?</h3>
+
+      <ul>
+        <li>वेबसाइट</li>
+        <li>Landing Page</li>
+        <li>Portfolio</li>
+        <li>Blog</li>
+        <li>Web App का interface</li>
+      </ul>
+
+      <p>
+        HTML के बाद <strong>CSS</strong> से design और
+        <strong>JavaScript</strong> से functionality जोड़ी जाती है।
+      </p>
+
+    `;
+
+  }
+
+
+  if(
+    q.includes("business") ||
+    q.includes("बिजनेस") ||
+    q.includes("व्यवसाय")
+  ){
+
+    return `
+
+      <h2>छोटा Business शुरू करने का तरीका</h2>
+
+      <p>
+        किसी भी छोटे business की शुरुआत बड़े निवेश से जरूरी नहीं है।
+        पहले ऐसी समस्या खोजिए जिसके लिए लोग पैसे देने को तैयार हों।
+      </p>
+
+      <h3>एक सरल तरीका</h3>
+
+      <ul>
+        <li>अपनी skill पहचानें</li>
+        <li>स्थानीय ग्राहकों की जरूरत समझें</li>
+        <li>छोटे स्तर पर शुरुआत करें</li>
+        <li>काम की quality और भरोसे पर ध्यान दें</li>
+        <li>ग्राहकों से feedback लें</li>
+      </ul>
+
+      <p>
+        शुरुआत में लक्ष्य सीखना, ग्राहक समझना और लगातार सुधार करना होना चाहिए।
+      </p>
+
+    `;
+
+  }
+
+
+  if(
+    q.includes("भारत") ||
+    q.includes("india")
+  ){
+
+    return `
+
+      <h2>भारत</h2>
+
+      <p>
+        भारत दक्षिण एशिया का एक बड़ा देश है और इसकी संस्कृति,
+        भाषाओं, खान-पान और परंपराओं में बहुत विविधता है।
+      </p>
+
+      <h3>कुछ प्रमुख बातें</h3>
+
+      <ul>
+        <li>राजधानी — नई दिल्ली</li>
+        <li>मुद्रा — भारतीय रुपया</li>
+        <li>आधिकारिक संघ भाषाएँ — हिंदी और अंग्रेज़ी</li>
+        <li>भारत में अनेक क्षेत्रीय भाषाएँ और संस्कृतियाँ हैं</li>
+      </ul>
+
+    `;
+
+  }
+
+
+  return `
+
+    <h2>आपका सवाल</h2>
+
+    <p>
+      आपने पूछा:
+      <strong>${escapeHTML(question)}</strong>
+    </p>
+
+    <p>
+      यह अभी <strong>Demo Mode</strong> में चल रहा है।
+      इस interface में वास्तविक AI जोड़ने पर कोई भी व्यक्ति
+      अपने सवाल लिखकर AI से जवाब प्राप्त कर सकेगा।
+    </p>
+
+    <h3>अगला स्तर</h3>
+
+    <p>
+      वास्तविक AI के लिए इस वेबसाइट को एक सुरक्षित backend
+      से जोड़ना होगा। Backend AI API को request भेजेगा और
+      प्राप्त उत्तर को इसी किताब-जैसे interface में दिखाएगा।
+    </p>
+
+  `;
+
+}
+
+
+function escapeHTML(text){
+
+  return text
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function newChat(){
+
+  chat.innerHTML="";
+
+  document.getElementById("welcome").style.display="block";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+function toggleTheme(){
+
+  document.body.classList.toggle("light-mode");
+
+}
+
+
+/* LIGHT MODE */
+
+const style=document.createElement("style");
+
+style.innerHTML=`
+
+body.light-mode{
+  background:#d9d0bd;
+}
+
+body.light-mode .book{
+  background:#f5f0e5;
+}
+
+`;
+
+document.head.appendChild(style);
 
 </script>
 
 </body>
 </html>
-
