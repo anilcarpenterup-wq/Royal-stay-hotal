@@ -3,882 +3,453 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Reader — Ask Anything</title>
+
+<title>Flower Rise Animation</title>
 
 <style>
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 body{
-  font-family: Georgia, "Noto Serif", serif;
-  background:
-    radial-gradient(circle at top,#28324d 0%,#111522 45%,#080a10 100%);
-  color:#252525;
-  min-height:100vh;
-  padding:20px;
-}
-
-/* MAIN BOOK */
-.book{
-  width:min(1100px,100%);
-  min-height:calc(100vh - 40px);
-  margin:auto;
-  background:#eee9dc;
-  border-radius:18px;
-  box-shadow:
-    0 30px 80px rgba(0,0,0,.55),
-    inset 0 0 30px rgba(0,0,0,.08);
-  overflow:hidden;
-  position:relative;
-}
-
-/* HEADER */
-.header{
-  height:72px;
-  background:#171b29;
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 25px;
-  font-family:Arial,sans-serif;
-}
-
-.logo{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.logo-icon{
-  width:42px;
-  height:42px;
-  border-radius:12px;
-  background:linear-gradient(135deg,#d9b36c,#8b6231);
-  display:grid;
-  place-items:center;
-  font-size:22px;
-}
-
-.logo h2{
-  font-size:20px;
-}
-
-.logo small{
-  display:block;
-  color:#aaa;
-  margin-top:2px;
-}
-
-.header-buttons{
-  display:flex;
-  gap:8px;
-}
-
-.header button{
-  border:1px solid #3d4355;
-  background:#23283a;
-  color:white;
-  padding:10px 13px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.header button:hover{
-  background:#343b51;
-}
-
-/* CONTENT */
-.content{
-  max-width:850px;
-  margin:auto;
-  padding:45px 25px 150px;
-}
-
-/* WELCOME */
-.welcome{
-  text-align:center;
-  margin-bottom:35px;
-}
-
-.welcome .book-icon{
-  font-size:55px;
-  margin-bottom:12px;
-}
-
-.welcome h1{
-  font-size:38px;
-  color:#29251f;
-  margin-bottom:10px;
-}
-
-.welcome p{
-  font-family:Arial,sans-serif;
-  color:#6b655b;
-  font-size:15px;
-}
-
-/* EXAMPLE QUESTIONS */
-.examples{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
-  margin:25px 0 40px;
-}
-
-.example{
-  background:#f8f4e9;
-  border:1px solid #d7cebb;
-  border-radius:30px;
-  padding:10px 16px;
-  cursor:pointer;
-  color:#574c3c;
-  font-family:Arial,sans-serif;
-  transition:.2s;
-}
-
-.example:hover{
-  transform:translateY(-2px);
-  box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-/* CHAT BLOCK */
-.chat{
-  display:flex;
-  flex-direction:column;
-  gap:24px;
-}
-
-/* USER QUESTION */
-.user-block{
-  align-self:flex-end;
-  max-width:78%;
-}
-
-.user-label{
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  color:#777;
-  margin-bottom:6px;
-  text-align:right;
-}
-
-.user-question{
-  background:#242a3a;
-  color:white;
-  padding:15px 18px;
-  border-radius:17px 17px 4px 17px;
-  font-family:Arial,sans-serif;
-  line-height:1.5;
-}
-
-/* AI BOOK PAGE */
-.ai-block{
-  position:relative;
-  background:#fffdf5;
-  border:1px solid #ddd3bd;
-  border-radius:4px;
-  padding:30px 32px;
-  box-shadow:
-    8px 8px 0 #ded6c4,
-    0 10px 25px rgba(0,0,0,.08);
-}
-
-.ai-block:before{
-  content:"";
-  position:absolute;
-  left:15px;
-  top:0;
-  bottom:0;
-  width:1px;
-  background:#e3b7a8;
-}
-
-.ai-label{
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  color:#947342;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  margin-bottom:15px;
-}
-
-.ai-answer{
-  font-size:18px;
-  line-height:1.85;
-  color:#302d27;
-}
-
-.ai-answer h2{
-  font-size:25px;
-  margin:8px 0 15px;
-  color:#201d18;
-}
-
-.ai-answer h3{
-  font-size:20px;
-  margin:18px 0 8px;
-}
-
-.ai-answer p{
-  margin-bottom:14px;
-}
-
-.ai-answer ul{
-  margin:10px 0 18px 25px;
-}
-
-.ai-answer li{
-  margin:7px 0;
-}
-
-.ai-answer strong{
-  color:#7b5725;
-}
-
-/* ACTIONS */
-.answer-actions{
-  display:flex;
-  gap:8px;
-  margin-top:20px;
-  padding-top:15px;
-  border-top:1px solid #e7dfcf;
-}
-
-.answer-actions button{
-  border:1px solid #d8cfbd;
-  background:#f5f0e4;
-  color:#665a48;
-  padding:8px 12px;
-  border-radius:8px;
-  cursor:pointer;
-  font-family:Arial,sans-serif;
-}
-
-.answer-actions button:hover{
-  background:#e9e1d1;
-}
-
-/* INPUT AREA */
-.input-area{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(850px,calc(100% - 40px));
-  z-index:20;
-}
-
-.input-box{
-  background:rgba(25,29,42,.96);
-  border:1px solid #41485c;
-  padding:8px;
-  border-radius:18px;
-  display:flex;
-  gap:8px;
-  box-shadow:0 15px 40px rgba(0,0,0,.4);
-  backdrop-filter:blur(15px);
-}
-
-#question{
-  flex:1;
-  background:transparent;
-  border:0;
-  outline:none;
-  color:white;
-  font-family:Arial,sans-serif;
-  font-size:16px;
-  padding:13px;
-}
-
-#question::placeholder{
-  color:#969baa;
-}
-
-#send{
-  width:50px;
-  border:0;
-  border-radius:13px;
-  background:linear-gradient(135deg,#d6ae67,#966b34);
-  color:white;
-  font-size:20px;
-  cursor:pointer;
-}
-
-#send:hover{
-  transform:scale(1.03);
-}
-
-/* TYPING */
-.typing{
-  display:flex;
-  gap:5px;
-  padding:10px 0;
-}
-
-.typing span{
-  width:7px;
-  height:7px;
-  background:#a98755;
-  border-radius:50%;
-  animation:blink 1.2s infinite;
-}
-
-.typing span:nth-child(2){
-  animation-delay:.2s;
-}
-
-.typing span:nth-child(3){
-  animation-delay:.4s;
-}
-
-@keyframes blink{
-  0%,80%,100%{opacity:.25}
-  40%{opacity:1}
-}
-
-/* MOBILE */
-@media(max-width:650px){
-
-  body{
-    padding:0;
-  }
-
-  .book{
     min-height:100vh;
-    border-radius:0;
-  }
+    overflow:hidden;
+    background:#071116;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
-  .header{
+/* Main Garden */
+.garden{
+    position:relative;
+    width:100%;
+    height:100vh;
+    max-width:900px;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 65%,
+        rgba(0,120,140,.15),
+        transparent 35%),
+        #030b0f;
+}
+
+/* Stars */
+.stars{
+    position:absolute;
+    inset:0;
+}
+
+.star{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#b8ffff;
+    box-shadow:0 0 8px #7fffff;
+    animation:twinkle 2s infinite alternate;
+}
+
+.star:nth-child(1){left:10%;top:18%;animation-delay:.2s}
+.star:nth-child(2){left:20%;top:30%;animation-delay:1s}
+.star:nth-child(3){left:31%;top:12%;animation-delay:.5s}
+.star:nth-child(4){left:43%;top:22%;animation-delay:1.3s}
+.star:nth-child(5){left:54%;top:10%;animation-delay:.7s}
+.star:nth-child(6){left:67%;top:25%;animation-delay:1.5s}
+.star:nth-child(7){left:78%;top:15%;animation-delay:.4s}
+.star:nth-child(8){left:90%;top:32%;animation-delay:1.1s}
+.star:nth-child(9){left:73%;top:40%;animation-delay:.9s}
+.star:nth-child(10){left:37%;top:38%;animation-delay:.3s}
+
+@keyframes twinkle{
+    from{opacity:.15;transform:scale(.6)}
+    to{opacity:1;transform:scale(1.5)}
+}
+
+/* Grass */
+.grass{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:35%;
+}
+
+.blade{
+    position:absolute;
+    bottom:0;
+    width:7px;
+    height:130px;
+    border-radius:100% 0 100% 0;
+    background:linear-gradient(
+        to top,
+        #063d1d,
+        #28c94d
+    );
+    transform-origin:bottom center;
+    animation:sway 3s ease-in-out infinite alternate;
+}
+
+@keyframes sway{
+    from{transform:rotate(-5deg)}
+    to{transform:rotate(8deg)}
+}
+
+.b1{left:8%;height:130px}
+.b2{left:14%;height:180px;animation-delay:.4s}
+.b3{left:22%;height:110px;animation-delay:1s}
+.b4{left:80%;height:150px;animation-delay:.6s}
+.b5{left:87%;height:120px;animation-delay:1.2s}
+.b6{left:94%;height:170px;animation-delay:.2s}
+
+/* Plant */
+.plant{
+    position:absolute;
+    left:50%;
+    bottom:5%;
+    width:300px;
+    height:600px;
+    transform:translateX(-50%);
+}
+
+/* Stems */
+.stem{
+    position:absolute;
+    bottom:80px;
+    width:7px;
+    background:linear-gradient(
+        to top,
+        #075b62,
+        #55e0e5
+    );
+    border-radius:10px;
+    transform-origin:bottom;
+    animation:grow 2s ease-out forwards,
+              stemSway 4s ease-in-out infinite alternate;
+}
+
+.stem1{
+    left:48%;
+    height:430px;
+}
+
+.stem2{
+    left:28%;
+    height:320px;
+    transform:rotate(-8deg);
+    animation-delay:.3s;
+}
+
+.stem3{
+    left:69%;
+    height:350px;
+    transform:rotate(8deg);
+    animation-delay:.6s;
+}
+
+@keyframes grow{
+    from{
+        transform:scaleY(0);
+    }
+    to{
+        transform:scaleY(1);
+    }
+}
+
+@keyframes stemSway{
+    from{margin-left:-3px}
+    to{margin-left:5px}
+}
+
+/* Leaves */
+.leaf{
+    position:absolute;
+    width:65px;
+    height:30px;
+    background:linear-gradient(
+        135deg,
+        #087c91,
+        #2bc9d1
+    );
+    border-radius:100% 0 100% 0;
+    box-shadow:0 0 12px rgba(50,220,240,.3);
+    animation:leafMove 3s ease-in-out infinite alternate;
+}
+
+@keyframes leafMove{
+    from{transform:rotate(-5deg)}
+    to{transform:rotate(7deg)}
+}
+
+.l1{left:36%;bottom:310px;transform:rotate(25deg)}
+.l2{left:58%;bottom:360px;transform:rotate(-30deg)}
+.l3{left:25%;bottom:250px;transform:rotate(-25deg)}
+.l4{left:65%;bottom:270px;transform:rotate(25deg)}
+.l5{left:42%;bottom:200px;transform:rotate(-20deg)}
+.l6{left:52%;bottom:145px;transform:rotate(30deg)}
+.l7{left:30%;bottom:150px;transform:rotate(-30deg)}
+
+/* Flower */
+.flower{
+    position:absolute;
+    width:95px;
+    height:95px;
+    transform:translate(-50%,-50%);
+    animation:bloom 1.8s ease-out forwards,
+              flowerFloat 4s ease-in-out infinite alternate;
+}
+
+@keyframes bloom{
+    0%{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(0);
+    }
+    70%{
+        transform:translate(-50%,-50%) scale(1.15);
+    }
+    100%{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1);
+    }
+}
+
+@keyframes flowerFloat{
+    from{margin-left:-4px}
+    to{margin-left:5px}
+}
+
+.f1{
+    left:50%;
+    top:16%;
+}
+
+.f2{
+    left:28%;
+    top:33%;
+    animation-delay:.5s;
+}
+
+.f3{
+    left:72%;
+    top:28%;
+    animation-delay:1s;
+}
+
+/* Petals */
+.petal{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:42px;
     height:65px;
-    padding:0 14px;
-  }
+    background:linear-gradient(
+        to bottom,
+        #c9ffff,
+        #49bfc8
+    );
+    border-radius:50% 50% 45% 45%;
+    transform-origin:50% 100%;
+    filter:drop-shadow(0 0 8px #63e5ed);
+}
 
-  .logo h2{
-    font-size:17px;
-  }
+.p1{transform:translate(-50%,-100%) rotate(0deg)}
+.p2{transform:translate(-50%,-100%) rotate(72deg)}
+.p3{transform:translate(-50%,-100%) rotate(144deg)}
+.p4{transform:translate(-50%,-100%) rotate(216deg)}
+.p5{transform:translate(-50%,-100%) rotate(288deg)}
 
-  .logo small{
-    font-size:10px;
-  }
+/* Flower Center */
+.center{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:28px;
+    height:28px;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:#efff82;
+    box-shadow:
+        0 0 8px #ffff55,
+        0 0 20px #8effff;
+}
 
-  .logo-icon{
-    width:37px;
-    height:37px;
-  }
+/* Bottom leaves / bush */
+.bush{
+    position:absolute;
+    bottom:2%;
+    left:50%;
+    width:300px;
+    height:150px;
+    transform:translateX(-50%);
+}
 
-  .header button{
-    padding:8px 9px;
-    font-size:12px;
-  }
+.bushLeaf{
+    position:absolute;
+    width:80px;
+    height:35px;
+    background:linear-gradient(
+        135deg,
+        #064f63,
+        #20a9bd
+    );
+    border-radius:100% 0 100% 0;
+    filter:drop-shadow(0 0 7px rgba(0,220,240,.3));
+}
 
-  .content{
-    padding:30px 14px 140px;
-  }
+.bushLeaf:nth-child(1){
+    left:5%;
+    bottom:35px;
+    transform:rotate(-30deg);
+}
+.bushLeaf:nth-child(2){
+    left:18%;
+    bottom:65px;
+    transform:rotate(25deg);
+}
+.bushLeaf:nth-child(3){
+    left:32%;
+    bottom:25px;
+    transform:rotate(-20deg);
+}
+.bushLeaf:nth-child(4){
+    left:45%;
+    bottom:75px;
+    transform:rotate(25deg);
+}
+.bushLeaf:nth-child(5){
+    left:60%;
+    bottom:30px;
+    transform:rotate(-25deg);
+}
+.bushLeaf:nth-child(6){
+    left:75%;
+    bottom:65px;
+    transform:rotate(25deg);
+}
 
-  .welcome h1{
-    font-size:29px;
-  }
+/* Firefly */
+.firefly{
+    position:absolute;
+    width:5px;
+    height:5px;
+    background:#cfff63;
+    border-radius:50%;
+    box-shadow:0 0 12px #dfff55;
+    animation:fly 5s linear infinite;
+}
 
-  .welcome p{
-    font-size:14px;
-  }
+.firefly:nth-child(1){left:45%;top:35%}
+.firefly:nth-child(2){left:62%;top:22%;animation-delay:1s}
+.firefly:nth-child(3){left:35%;top:25%;animation-delay:2s}
+.firefly:nth-child(4){left:70%;top:38%;animation-delay:3s}
 
-  .user-block{
-    max-width:90%;
-  }
-
-  .ai-block{
-    padding:24px 20px;
-    box-shadow:5px 5px 0 #ded6c4;
-  }
-
-  .ai-answer{
-    font-size:16px;
-    line-height:1.75;
-  }
-
-  .ai-answer h2{
-    font-size:22px;
-  }
-
-  .input-area{
-    width:calc(100% - 20px);
-    bottom:10px;
-  }
-
-  .example{
-    font-size:13px;
-    padding:9px 12px;
-  }
+@keyframes fly{
+    0%{transform:translate(0,0);opacity:0}
+    20%{opacity:1}
+    50%{transform:translate(30px,-40px)}
+    80%{opacity:1}
+    100%{
+        transform:translate(-20px,-80px);
+        opacity:0;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="book">
+<div class="garden">
 
-  <header class="header">
-
-    <div class="logo">
-      <div class="logo-icon">✦</div>
-      <div>
-        <h2>AI Reader</h2>
-        <small>Ask Anything</small>
-      </div>
+    <!-- Stars -->
+    <div class="stars">
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
+        <span class="star"></span>
     </div>
 
-    <div class="header-buttons">
-      <button onclick="newChat()">＋ New</button>
-      <button onclick="toggleTheme()">◐</button>
+    <!-- Fireflies -->
+    <span class="firefly"></span>
+    <span class="firefly"></span>
+    <span class="firefly"></span>
+    <span class="firefly"></span>
+
+    <!-- Grass -->
+    <div class="grass">
+        <span class="blade b1"></span>
+        <span class="blade b2"></span>
+        <span class="blade b3"></span>
+        <span class="blade b4"></span>
+        <span class="blade b5"></span>
+        <span class="blade b6"></span>
     </div>
 
-  </header>
+    <!-- Main Plant -->
+    <div class="plant">
 
+        <div class="stem stem1"></div>
+        <div class="stem stem2"></div>
+        <div class="stem stem3"></div>
 
-  <main class="content">
+        <!-- Leaves -->
+        <span class="leaf l1"></span>
+        <span class="leaf l2"></span>
+        <span class="leaf l3"></span>
+        <span class="leaf l4"></span>
+        <span class="leaf l5"></span>
+        <span class="leaf l6"></span>
+        <span class="leaf l7"></span>
 
-    <section class="welcome" id="welcome">
+        <!-- Flower 1 -->
+        <div class="flower f1">
+            <span class="petal p1"></span>
+            <span class="petal p2"></span>
+            <span class="petal p3"></span>
+            <span class="petal p4"></span>
+            <span class="petal p5"></span>
+            <span class="center"></span>
+        </div>
 
-      <div class="book-icon">📖</div>
+        <!-- Flower 2 -->
+        <div class="flower f2">
+            <span class="petal p1"></span>
+            <span class="petal p2"></span>
+            <span class="petal p3"></span>
+            <span class="petal p4"></span>
+            <span class="petal p5"></span>
+            <span class="center"></span>
+        </div>
 
-      <h1>पूछिए, कुछ भी।</h1>
-
-      <p>
-        सवाल लिखिए और जवाब को किताब के पन्ने की तरह पढ़िए।
-      </p>
-
-    </section>
-
-
-    <div class="examples">
-
-      <button class="example"
-        onclick="askExample('HTML क्या है और इसे कैसे सीखें?')">
-        HTML कैसे सीखें?
-      </button>
-
-      <button class="example"
-        onclick="askExample('एक छोटा business कैसे शुरू करें?')">
-        Business शुरू कैसे करें?
-      </button>
-
-      <button class="example"
-        onclick="askExample('भारत के बारे में बताइए')">
-        भारत के बारे में बताइए
-      </button>
-
-      <button class="example"
-        onclick="askExample('आज कुछ नया सीखने के लिए बताइए')">
-        कुछ नया सिखाइए
-      </button>
+        <!-- Flower 3 -->
+        <div class="flower f3">
+            <span class="petal p1"></span>
+            <span class="petal p2"></span>
+            <span class="petal p3"></span>
+            <span class="petal p4"></span>
+            <span class="petal p5"></span>
+            <span class="center"></span>
+        </div>
 
     </div>
 
-
-    <div class="chat" id="chat"></div>
-
-  </main>
+    <!-- Bush -->
+    <div class="bush">
+        <span class="bushLeaf"></span>
+        <span class="bushLeaf"></span>
+        <span class="bushLeaf"></span>
+        <span class="bushLeaf"></span>
+        <span class="bushLeaf"></span>
+        <span class="bushLeaf"></span>
+    </div>
 
 </div>
-
-
-<div class="input-area">
-
-  <div class="input-box">
-
-    <input
-      id="question"
-      type="text"
-      placeholder="कुछ भी पूछें..."
-      autocomplete="off"
-    >
-
-    <button id="send" onclick="sendQuestion()">➤</button>
-
-  </div>
-
-</div>
-
-
-<script>
-
-const questionInput = document.getElementById("question");
-const chat = document.getElementById("chat");
-
-questionInput.addEventListener("keydown",function(e){
-  if(e.key === "Enter"){
-    sendQuestion();
-  }
-});
-
-
-function askExample(text){
-  questionInput.value = text;
-  sendQuestion();
-}
-
-
-function sendQuestion(){
-
-  const question = questionInput.value.trim();
-
-  if(!question) return;
-
-  document.getElementById("welcome").style.display="none";
-
-  addUserQuestion(question);
-
-  questionInput.value="";
-
-  const aiBox = createAIBox();
-
-  chat.appendChild(aiBox);
-
-  aiBox.scrollIntoView({
-    behavior:"smooth",
-    block:"start"
-  });
-
-  showTyping(aiBox,question);
-}
-
-
-function addUserQuestion(question){
-
-  const block = document.createElement("div");
-
-  block.className="user-block";
-
-  block.innerHTML=`
-
-    <div class="user-label">
-      YOU
-    </div>
-
-    <div class="user-question">
-      ${escapeHTML(question)}
-    </div>
-
-  `;
-
-  chat.appendChild(block);
-}
-
-
-function createAIBox(){
-
-  const block=document.createElement("div");
-
-  block.className="ai-block";
-
-  block.innerHTML=`
-
-    <div class="ai-label">
-      ✦ AI READER
-    </div>
-
-    <div class="ai-answer">
-
-      <div class="typing">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-
-    </div>
-
-  `;
-
-  return block;
-}
-
-
-function showTyping(box,question){
-
-  setTimeout(()=>{
-
-    const answer=getDemoAnswer(question);
-
-    const answerArea=box.querySelector(".ai-answer");
-
-    answerArea.innerHTML="";
-
-    typeText(answerArea,answer,0,box);
-
-  },700);
-
-}
-
-
-function typeText(element,text,index,box){
-
-  if(index < text.length){
-
-    element.innerHTML =
-      text.substring(0,index+1);
-
-    setTimeout(()=>{
-      typeText(element,text,index+1,box);
-    },8);
-
-  }else{
-
-    addActions(element,box);
-
-  }
-
-}
-
-
-function addActions(element,box){
-
-  const actions=document.createElement("div");
-
-  actions.className="answer-actions";
-
-  actions.innerHTML=`
-
-    <button onclick="copyAnswer(this)">
-      📋 Copy
-    </button>
-
-    <button onclick="speakAnswer(this)">
-      🔊 Read
-    </button>
-
-  `;
-
-  box.appendChild(actions);
-}
-
-
-function copyAnswer(button){
-
-  const box=button.closest(".ai-block");
-
-  const text=box.querySelector(".ai-answer").innerText;
-
-  navigator.clipboard.writeText(text);
-
-  button.innerText="✓ Copied";
-
-  setTimeout(()=>{
-    button.innerText="📋 Copy";
-  },1500);
-}
-
-
-function speakAnswer(button){
-
-  const box=button.closest(".ai-block");
-
-  const text=box.querySelector(".ai-answer").innerText;
-
-  if("speechSynthesis" in window){
-
-    speechSynthesis.cancel();
-
-    const speech=new SpeechSynthesisUtterance(text);
-
-    speech.lang="hi-IN";
-
-    speech.rate=.95;
-
-    speechSynthesis.speak(speech);
-
-  }
-
-}
-
-
-function getDemoAnswer(question){
-
-  const q=question.toLowerCase();
-
-
-  if(
-    q.includes("html") ||
-    q.includes("वेब") ||
-    q.includes("website")
-  ){
-
-    return `
-
-      <h2>HTML क्या है?</h2>
-
-      <p>
-        <strong>HTML</strong> वेबसाइट का ढांचा बनाने की भाषा है।
-        इसे आप किसी घर के नक्शे की तरह समझ सकते हैं।
-      </p>
-
-      <h3>HTML से क्या बना सकते हैं?</h3>
-
-      <ul>
-        <li>वेबसाइट</li>
-        <li>Landing Page</li>
-        <li>Portfolio</li>
-        <li>Blog</li>
-        <li>Web App का interface</li>
-      </ul>
-
-      <p>
-        HTML के बाद <strong>CSS</strong> से design और
-        <strong>JavaScript</strong> से functionality जोड़ी जाती है।
-      </p>
-
-    `;
-
-  }
-
-
-  if(
-    q.includes("business") ||
-    q.includes("बिजनेस") ||
-    q.includes("व्यवसाय")
-  ){
-
-    return `
-
-      <h2>छोटा Business शुरू करने का तरीका</h2>
-
-      <p>
-        किसी भी छोटे business की शुरुआत बड़े निवेश से जरूरी नहीं है।
-        पहले ऐसी समस्या खोजिए जिसके लिए लोग पैसे देने को तैयार हों।
-      </p>
-
-      <h3>एक सरल तरीका</h3>
-
-      <ul>
-        <li>अपनी skill पहचानें</li>
-        <li>स्थानीय ग्राहकों की जरूरत समझें</li>
-        <li>छोटे स्तर पर शुरुआत करें</li>
-        <li>काम की quality और भरोसे पर ध्यान दें</li>
-        <li>ग्राहकों से feedback लें</li>
-      </ul>
-
-      <p>
-        शुरुआत में लक्ष्य सीखना, ग्राहक समझना और लगातार सुधार करना होना चाहिए।
-      </p>
-
-    `;
-
-  }
-
-
-  if(
-    q.includes("भारत") ||
-    q.includes("india")
-  ){
-
-    return `
-
-      <h2>भारत</h2>
-
-      <p>
-        भारत दक्षिण एशिया का एक बड़ा देश है और इसकी संस्कृति,
-        भाषाओं, खान-पान और परंपराओं में बहुत विविधता है।
-      </p>
-
-      <h3>कुछ प्रमुख बातें</h3>
-
-      <ul>
-        <li>राजधानी — नई दिल्ली</li>
-        <li>मुद्रा — भारतीय रुपया</li>
-        <li>आधिकारिक संघ भाषाएँ — हिंदी और अंग्रेज़ी</li>
-        <li>भारत में अनेक क्षेत्रीय भाषाएँ और संस्कृतियाँ हैं</li>
-      </ul>
-
-    `;
-
-  }
-
-
-  return `
-
-    <h2>आपका सवाल</h2>
-
-    <p>
-      आपने पूछा:
-      <strong>${escapeHTML(question)}</strong>
-    </p>
-
-    <p>
-      यह अभी <strong>Demo Mode</strong> में चल रहा है।
-      इस interface में वास्तविक AI जोड़ने पर कोई भी व्यक्ति
-      अपने सवाल लिखकर AI से जवाब प्राप्त कर सकेगा।
-    </p>
-
-    <h3>अगला स्तर</h3>
-
-    <p>
-      वास्तविक AI के लिए इस वेबसाइट को एक सुरक्षित backend
-      से जोड़ना होगा। Backend AI API को request भेजेगा और
-      प्राप्त उत्तर को इसी किताब-जैसे interface में दिखाएगा।
-    </p>
-
-  `;
-
-}
-
-
-function escapeHTML(text){
-
-  return text
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-function newChat(){
-
-  chat.innerHTML="";
-
-  document.getElementById("welcome").style.display="block";
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-function toggleTheme(){
-
-  document.body.classList.toggle("light-mode");
-
-}
-
-
-/* LIGHT MODE */
-
-const style=document.createElement("style");
-
-style.innerHTML=`
-
-body.light-mode{
-  background:#d9d0bd;
-}
-
-body.light-mode .book{
-  background:#f5f0e5;
-}
-
-`;
-
-document.head.appendChild(style);
-
-</script>
 
 </body>
 </html>
